@@ -45,6 +45,20 @@ jobs:
       - name: Run full ML pipeline
         run: python src/pipeline.py --n-estimators 10 --max-depth 2
 
+      - name: Upload models artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: models
+          path: models/**
+
+      - name: Upload mlruns artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlruns
+          path: mlruns/**
+
       - name: List generated artifacts
         run: |
           echo "=== models directory ==="
