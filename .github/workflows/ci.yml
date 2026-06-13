@@ -50,6 +50,9 @@ jobs:
           ls -R models || true
           echo "=== mlruns directory ==="
           ls -R mlruns || true
+          echo "\n=== upload artifact paths ==="
+          echo "models artifact path: models/**"
+          echo "mlruns artifact path: mlruns/**"
 
       - name: Upload models artifact
         if: always()
