@@ -10,6 +10,8 @@ jobs:
   ci:
     name: Continuous Integration
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix:
         python-version: [3.11]
@@ -17,6 +19,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -50,7 +55,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: models
-          path: models/**
+          path: models/*.pkl
+          retention-days: 7
 
       - name: Upload mlruns artifact
         if: always()
@@ -58,6 +64,7 @@ jobs:
         with:
           name: mlruns
           path: mlruns/**
+          retention-days: 7
 
       - name: List generated artifacts
         run: |
@@ -65,3 +72,25 @@ jobs:
           ls -R models || true
           echo "=== mlruns directory ==="
           ls -R mlruns || true
+
+      - name: Create GitHub Release with artifacts
+        if: always()
+        uses: ncipollo/release-action@v1
+        with:
+          tag: pipeline-${{ github.run_number }}
+          name: Pipeline artifacts - run ${{ github.run_number }}
+          files: |
+            models/**
+            mlruns/**
+          draft: false
+          prerelease: false
+
+      - name: Commit models and mlruns to repository
+        if: "github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]')"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add models || true
+          git add mlruns || true
+          git commit -m "ci: add pipeline artifacts (models + mlruns) [skip ci]" || echo "no changes to commit"
+          git push origin HEAD:main || echo "push failed"

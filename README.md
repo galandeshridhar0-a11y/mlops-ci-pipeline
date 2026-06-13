@@ -49,14 +49,14 @@ You should see: `✅ All data quality checks passed!`
 
 ## Session Outline (60 minutes)
 
-| Time | Step | File | Concept |
-|------|------|------|---------|
-| 0–10 min | Look at the data | `data/` | What are we working with? |
-| 10–20 min | Data quality gate | `src/data_check.py` | Schema enforcement |
-| 20–35 min | Training + tracking | `src/train.py` | Artifacts + MLflow |
-| 35–45 min | Evaluation gate | `src/evaluate.py` | Model validation |
-| 45–55 min | Run the pipeline | `src/pipeline.py` | CI/CD trigger |
-| 55–60 min | View MLflow UI | `mlflow ui` | Lineage + reproducibility |
+| Step | File | Concept |
+|------|------|---------|
+| Look at the data | `data/` | What are we working with? |
+| Data quality gate | `src/data_check.py` | Schema enforcement |
+| Training + tracking | `src/train.py` | Artifacts + MLflow |
+| Evaluation gate | `src/evaluate.py` | Model validation |
+| Run the pipeline | `src/pipeline.py` | CI/CD trigger |
+| View MLflow UI | `mlflow ui` | Lineage + reproducibility |
 
 ---
 
