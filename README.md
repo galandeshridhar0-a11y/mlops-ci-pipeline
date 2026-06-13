@@ -37,7 +37,7 @@ your_code_push
 pip install scikit-learn mlflow pandas
 
 # 2. Go into the project folder
-cd mlops_demo
+cd project
 
 # 3. Check everything works
 python src/data_check.py
@@ -86,11 +86,19 @@ python src/pipeline.py
 ```bash
 mlflow ui
 ```
+```bash
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+```
 
 Open http://localhost:5000 in your browser.
 You'll see every run with its parameters, metrics, and saved model.
 
 **This is lineage** — you can click any past run and replay it exactly.
+- **Experiments tab** — every run listed with params + metrics
+- **Run detail** — accuracy, F1, seed, dataset, pipeline version
+- **Artifacts tab** — model files, scaler, confusion matrix plot
+- **Models tab** — `iris-classifier` v1 with `champion` alias
+
 
 ---
 
@@ -108,7 +116,7 @@ mlops_demo/
 │   ├── register.py         ← Step 4: Save model artifact
 │   └── pipeline.py         ← Step 5: Run all steps
 ├── tests/
-│   └── test_data_check.py  ← Simple unit test (bonus)
+│   └── test_data_check.py  ← Simple unit test
 └── models/
     └── (created automatically when you run register.py)
 ```
@@ -136,3 +144,51 @@ mlops_demo/
 - **Open MLflow UI while `train.py` runs** — live updates make it tangible.
 - **Change `n_estimators` in `train.py`** and run again — show two runs side-by-side in MLflow.
 - **Set accuracy threshold to 0.99 in `evaluate.py`** — show the gate blocking a "bad" model.
+
+## Common MLOps Workflow Commands
+
+### 1. Start MLflow Tracking Server
+
+```bash
+mlflow server
+```
+
+---
+
+### 2. Train Machine Learning Model
+
+```bash
+python train.py
+```
+
+---
+
+### 3. View MLflow Experiments
+
+```bash
+mlflow ui
+```
+
+---
+
+### 4. Register Model in MLflow Model Registry
+
+```bash
+mlflow models register
+```
+
+---
+
+### 5. Serve Model Locally
+
+```bash
+mlflow models serve
+```
+
+---
+
+### 6. Build Docker Image for Deployment
+
+```bash
+docker build .
+```
