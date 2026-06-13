@@ -1,5 +1,5 @@
 # MLOps Foundations — Hands-On Demo
-### Iris Classification · 1-Hour Session
+### Iris Classification 
 
 ---
 
@@ -30,7 +30,7 @@ your_code_push
 
 ---
 
-## Setup (5 minutes)
+## Setup 
 
 ```bash
 # 1. Install dependencies
@@ -47,7 +47,7 @@ You should see: `✅ All data quality checks passed!`
 
 ---
 
-## Session Outline (60 minutes)
+## Session Outline 
 
 | Step | File | Concept |
 |------|------|---------|
